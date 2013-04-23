@@ -347,7 +347,8 @@ var ngGrid = function ($scope, options, sortService, domUtilityService, $filter,
                     enableResize: self.config.enableColumnResize,
                     enableSort: self.config.enableSorting,
                     enablePinning: self.config.enablePinning,
-                    enableCellEdit: self.config.enableCellEdit 
+                    enableCellEdit: self.config.enableCellEdit,
+                    pinRight: self.config.pinRight   
                 }, $scope, self, domUtilityService, $templateCache, $utils);
                 var indx = self.config.groups.indexOf(colDef.field);
                 if (indx != -1) {
@@ -665,7 +666,14 @@ var ngGrid = function ($scope, options, sortService, domUtilityService, $filter,
                 var w = col.width + colwidths;
                 if (col.pinned) {
                     addCol(col);
-                    var newLeft = i > 0 ? (scrollLeft + totalLeft) : scrollLeft;
+                    if (col.pinned) {
+                    addCol(col);
+                    var newLeft;
+                    if (!col.colDef.pinRight) {
+                        newLeft = i > 0 ? (scrollLeft + totalLeft) : scrollLeft;
+                    } else {
+                        newLeft = parseInt($scope.viewportStyle().width) - col.width + scrollLeft;
+                    }
                     domUtilityService.setColLeft(col, newLeft, self);
                     totalLeft += col.width;
                 } else {

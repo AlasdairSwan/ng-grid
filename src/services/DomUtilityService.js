@@ -87,9 +87,14 @@
             "." + gridId + " .ngHeaderScroller { width: " + (trw + domUtilityService.ScrollH) + "px}";
         for (var i = 0; i < cols.length; i++) {
             var col = cols[i];
-            if (col.visible !== false) {
-                var colLeft = col.pinned ? grid.$viewport.scrollLeft() + sumWidth : sumWidth;
-                css += "." + gridId + " .col" + i + " { width: " + col.width + "px; left: " + colLeft + "px; height: " + rowHeight + "px }" +
+             if (col.visible !== false) {
+                var colLeft;
+                if (!col.colDef.pinRight) {
+                    colLeft = col.pinned ? grid.$viewport.scrollLeft() + sumWidth : sumWidth;
+                } else {
+                    colLeft = grid.$viewport.width() - col.width +  grid.$viewport.scrollLeft();
+                };
+                css += "." + gridId + " .col" + i + " { width: " + col.width + "px; left : " + colLeft + "px; height: " + rowHeight + "px }" +
                     "." + gridId + " .colt" + i + " { width: " + col.width + "px; }";
                 sumWidth += col.width;
             }
