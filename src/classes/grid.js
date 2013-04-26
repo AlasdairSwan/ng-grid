@@ -660,11 +660,11 @@ var ngGrid = function ($scope, options, sortService, domUtilityService, $filter,
             }
             r++;
         };
-        var pinnedRightWidth = 0;
         for (var i = 0; i < x; i++) {
             var col = $scope.columns[i];
             if (col.visible !== false) {
-                var w = col.width + colwidths;
+                var w = col.width + colwidths,
+                    pinnedRightWidth = 0;
                 if (col.pinned) {
                     addCol(col);
                     var newLeft;
@@ -672,12 +672,14 @@ var ngGrid = function ($scope, options, sortService, domUtilityService, $filter,
                         newLeft = i > 0 ? (scrollLeft + totalLeft) : scrollLeft;
                         totalLeft += col.width;
                     } else {
-                        newLeft = parseInt($scope.viewportStyle().width) - col.width + scrollLeft;
+                        newLeft = parseInt($scope.viewportStyle().width) - col.width + scrollLeft - domUtilityService.ScrollW;
                         pinnedRightWidth += col.width;
+                        var pinnedScrollWidth = $scope.totalRowWidth() - pinnedRightWidth
+                        if (newLeft >= pinnedScrollWidth) {
+                            newLeft = pinnedScrollWidth;
+                        }
                     }
-                    if (newLeft <= (w - pinnedRightWidth)) {
-                        domUtilityService.setColLeft(col, newLeft, self);
-                    }
+                    domUtilityService.setColLeft(col, newLeft, self);
                    } else {
                     if (w >= scrollLeft) {
                         if (colwidths <= scrollLeft + self.rootDim.outerWidth) {
