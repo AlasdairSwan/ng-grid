@@ -94,7 +94,7 @@
                 } else {
                     colLeft = grid.$viewport.width() - col.width +  grid.$viewport.scrollLeft();
                 };
-                css += "." + gridId + " .col" + i + " { width: " + col.width + "px; left : " + colLeft + "px; height: " + rowHeight + "px }" +
+                css += "." + gridId + " .col" + i + " { width: " + col.width + "px; left: " + colLeft + "px; height: " + rowHeight + "px }" +
                     "." + gridId + " .colt" + i + " { width: " + col.width + "px; }";
                 sumWidth += col.width;
             }
