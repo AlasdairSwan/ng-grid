@@ -1,13 +1,16 @@
 ﻿ngGridDirectives.directive('ngInput',['$parse', function($parse) {
     return function ($scope, elm, attrs) {
+        /*
         var getter = $parse($scope.$eval(attrs.ngInput));
 		var setter = getter.assign;
 		var oldCellValue = getter($scope.row.entity);
 		elm.val(oldCellValue);
+        */
         elm.bind('keyup', function() {
             var newVal = elm.val();
             if (!$scope.$root.$$phase) {
-                $scope.$apply(function(){setter($scope.row.entity,newVal); });
+                //$scope.$apply(function(){setter($scope.row.entity,newVal); });
+                $scope.row.entity[attrs.columnField] = newVal;
             }
         });
 		elm.bind('keydown', function(evt){
@@ -21,8 +24,8 @@
 				case 27:
 					if (!$scope.$root.$$phase) {
 						$scope.$apply(function(){
-							setter($scope.row.entity,oldCellValue);
-							elm.val(oldCellValue);
+							//setter($scope.row.entity,oldCellValue);
+							//elm.val(oldCellValue);
 							elm.blur();
 						});
 					}
