@@ -2,7 +2,7 @@
 * ng-grid JavaScript Library
 * Authors: https://github.com/angular-ui/ng-grid/blob/master/README.md 
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 05/01/2013 13:54
+* Compiled At: 05/06/2013 00:06
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -266,16 +266,12 @@ ngGridServices.factory('$domUtilityService',['$utilityService', function($utils)
                 } else {
                     colLeft = grid.$viewport.width() - col.width +  grid.$viewport.scrollLeft();
                 };
-                css += "." + gridId + " .col" + i + " { width: " + col.width + "px; left : " + colLeft + "px; height: " + rowHeight + "px }" +
+                css += "." + gridId + " .col" + i + " { width: " + col.width + "px; left: " + colLeft + "px; height: " + rowHeight + "px }" +
                     "." + gridId + " .colt" + i + " { width: " + col.width + "px; }";
                 sumWidth += col.width;
             }
         };
-        if ($utils.isIe) { 
-            $style[0].styleSheet.cssText = css;
-        } else {
-            $style[0].appendChild(document.createTextNode(css));
-        }
+        $style[0].appendChild(document.createTextNode(css));
         grid.$styleSheet = $style;
         if (digest) {
             $scope.adjustScrollLeft(grid.$viewport.scrollLeft());
@@ -290,14 +286,8 @@ ngGridServices.factory('$domUtilityService',['$utilityService', function($utils)
             }
 			var str = grid.$styleSheet.html();
 			var newStr = str.replace(regex, "\.col" + col.index + " \{ width: " + col.width + "px; left: " + colLeft + "px");
-			if ($utils.isIe) { 
-			    setTimeout(function() {
-			        grid.$styleSheet.html(newStr);
-			    });
-			} else {
-			    grid.$styleSheet.html(newStr);
-			}
-		}
+			grid.$styleSheet.html(newStr);
+					}
     };
     domUtilityService.setColLeft.immediate = 1;
 	domUtilityService.RebuildGrid = function($scope, grid){

@@ -99,11 +99,8 @@
                 sumWidth += col.width;
             }
         };
-        if ($utils.isIe) { // IE
-            $style[0].styleSheet.cssText = css;
-        } else {
-            $style[0].appendChild(document.createTextNode(css));
-        }
+        $style[0].appendChild(document.createTextNode(css));
+        
         grid.$styleSheet = $style;
         if (digest) {
             $scope.adjustScrollLeft(grid.$viewport.scrollLeft());
@@ -118,14 +115,8 @@
             }
 			var str = grid.$styleSheet.html();
 			var newStr = str.replace(regex, "\.col" + col.index + " \{ width: " + col.width + "px; left: " + colLeft + "px");
-			if ($utils.isIe) { // IE
-			    setTimeout(function() {
-			        grid.$styleSheet.html(newStr);
-			    });
-			} else {
-			    grid.$styleSheet.html(newStr);
-			}
-		}
+			grid.$styleSheet.html(newStr);
+					}
     };
     domUtilityService.setColLeft.immediate = 1;
 	domUtilityService.RebuildGrid = function($scope, grid){
