@@ -2,7 +2,7 @@
 * ng-grid JavaScript Library
 * Authors: https://github.com/angular-ui/ng-grid/blob/master/README.md 
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 05/06/2013 00:06
+* Compiled At: 05/07/2013 16:04
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -2419,9 +2419,11 @@ ngGridDirectives.directive('ngCellHasFocus', ['$domUtilityService',
 		return function($scope, elm) {
             var isFocused = false;
             $scope.editCell = function(){
-                setTimeout(function() {
-                    focusOnInputElement($scope,elm);
-                }, 0);
+                if ( !$(e.target).parent('.ngCellText').hasClass('read-only') ) {
+	                setTimeout(function() {
+	                    focusOnInputElement($scope,elm);
+	                }, 0);
+	            }
             };
 			elm.bind('mousedown', function(){
 				elm.focus();
@@ -2471,14 +2473,7 @@ ngGridDirectives.directive('ngCell', ['$compile', '$domUtilityService', function
                 pre: function($scope, iElement) {
                     var html;
                     var cellTemplate = $scope.col.cellTemplate.replace(COL_FIELD, '$eval(\'row.entity.\' + col.field)');
-                    if ($scope.myData[$scope.row.rowIndex].hasOwnProperty('metadata') &&
-                        $scope.myData[$scope.row.rowIndex].metadata.hasOwnProperty($scope.col.field) &&
-                        $scope.myData[$scope.row.rowIndex].metadata[$scope.col.field].hasOwnProperty('editable') ) {
-
-                        $scope.col.enableCellEdit = ($scope.myData[$scope.row.rowIndex].metadata[$scope.col.field].editable === true) ? true : false;
-                    }
-
-					if($scope.col.enableCellEdit){
+    				if($scope.col.enableCellEdit){
 						html =  $scope.col.cellEditTemplate;
 						html = html.replace(DISPLAY_CELL_TEMPLATE, cellTemplate);
 						html = html.replace(EDITABLE_CELL_TEMPLATE, $scope.col.editableCellTemplate.replace(COL_FIELD, '$eval(\'row.entity.\' + col.field)'));
