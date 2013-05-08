@@ -2,7 +2,7 @@
 * ng-grid JavaScript Library
 * Authors: https://github.com/angular-ui/ng-grid/blob/master/README.md 
 * License: MIT (http://www.opensource.org/licenses/mit-license.php)
-* Compiled At: 05/07/2013 16:14
+* Compiled At: 05/07/2013 16:36
 ***********************************************/
 (function(window, $) {
 'use strict';
@@ -2418,7 +2418,7 @@ ngGridDirectives.directive('ngCellHasFocus', ['$domUtilityService',
 		};
 		return function($scope, elm) {
             var isFocused = false;
-            $scope.editCell = function(){
+            $scope.editCell = function(e){
                 if ( !$(e.target).parent('.ngCellText').hasClass('read-only') ) {
 	                setTimeout(function() {
 	                    focusOnInputElement($scope,elm);

@@ -18,7 +18,7 @@ ngGridDirectives.directive('ngCellHasFocus', ['$domUtilityService',
 		return function($scope, elm) {
             var isFocused = false;
             $scope.editCell = function(e){             
-                if ( !$(e.target).parent('.ngCellText').hasClass('read-only') ) {
+                if ( ! ( $(e.target).hasClass('read-only') || $(e.target).parent('.ngCellText').hasClass('read-only') ) ) {
 	                setTimeout(function() {
 	                    focusOnInputElement($scope,elm);
 	                }, 0);
